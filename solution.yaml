@@ -250,6 +250,7 @@ Resources:
         SecurityGroupIds:
           - !Ref WebServerSecurityGroup
         UserData:
+          !Base64 |
           #!/bin/bash
           sudo su
           yum update -y
