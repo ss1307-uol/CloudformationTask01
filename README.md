@@ -6,4 +6,3 @@ and default routes for them in the private subnets. It also provide scalibilty a
 
 In order to use this template update the keyname with the existing key pair , here I used is MyTestKey.
 
-Please refer to below system architecture!
