@@ -4,7 +4,7 @@ Description:  This template deploys a VPC, with a pair of public and private sub
   and default routes for them in the private subnets.
 
 Parameters:
-  EnvironmentName:
+  Test:
     Description: An environment name that is prefixed to resource names
     Type: String
 
@@ -57,14 +57,14 @@ Resources:
       EnableDnsHostnames: true
       Tags:
         - Key: Name
-          Value: !Ref EnvironmentName
+          Value: !Ref Test
 
   InternetGateway:
     Type: AWS::EC2::InternetGateway
     Properties:
       Tags:
         - Key: Name
-          Value: !Ref EnvironmentName
+          Value: !Ref VPC
 
   InternetGatewayAttachment:
     Type: AWS::EC2::VPCGatewayAttachment
@@ -81,7 +81,7 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName} Public Subnet (AZ1)
+          Value: !Sub ${Test} Public Subnet (AZ1)
 
   PublicSubnet2:
     Type: AWS::EC2::Subnet
@@ -92,7 +92,7 @@ Resources:
       MapPublicIpOnLaunch: true
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName} Public Subnet (AZ2)
+          Value: !Sub ${Test} Public Subnet (AZ2)
 
   PrivateSubnet1:
     Type: AWS::EC2::Subnet
@@ -103,7 +103,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName} Private Subnet (AZ1)
+          Value: !Sub ${Test} Private Subnet (AZ1)
 
   PrivateSubnet2:
     Type: AWS::EC2::Subnet
@@ -114,7 +114,7 @@ Resources:
       MapPublicIpOnLaunch: false
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName} Private Subnet (AZ2)
+          Value: !Sub ${Test} Private Subnet (AZ2)
 
   NatGateway1EIP:
     Type: AWS::EC2::EIP
@@ -146,7 +146,7 @@ Resources:
       VpcId: !Ref VPC
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName} Public Routes
+          Value: !Sub ${Test} Public Routes
 
   DefaultPublicRoute:
     Type: AWS::EC2::Route
@@ -175,7 +175,7 @@ Resources:
       VpcId: !Ref VPC
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName} Private Routes (AZ1)
+          Value: !Sub ${Test} Private Routes (AZ1)
 
   DefaultPrivateRoute1:
     Type: AWS::EC2::Route
@@ -196,7 +196,7 @@ Resources:
       VpcId: !Ref VPC
       Tags:
         - Key: Name
-          Value: !Sub ${EnvironmentName} Private Routes (AZ2)
+          Value: !Sub ${Test} Private Routes (AZ2)
 
   DefaultPrivateRoute2:
     Type: AWS::EC2::Route
@@ -260,7 +260,7 @@ Resources:
           echo "Hello World from $(hostname -f)" > /var/www/html/index.html
 
   LoadBalancer:
-    Type: AWS::ElasticLoadBalancing::LoadBalancer
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
     Properties:
       Subnets:
         - !Ref PublicSubnet1
